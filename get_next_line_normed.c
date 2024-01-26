@@ -1,12 +1,14 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "libft.h"
 
-# define BUFFER_SIZE 100
+//#include "libft.h"
+#include "get_next_line.h"
+//# define BUFFER_SIZE 8
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+/*size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	count;
 	size_t	i;
@@ -82,12 +84,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (result);
 	}
 	return (NULL);
-}
+}*/
 
 static int	handle_remainder(char **container, char **remainder)
 {
 	size_t	remainder_len = ft_strlen(*remainder);
-	int		i;
+	size_t	i;
 	char	*sub;
 
 	i = 0;
@@ -112,6 +114,7 @@ static int	handle_remainder(char **container, char **remainder)
 	*container = ft_strjoin(*container, *remainder);
 	free(*remainder);
 	*remainder = NULL;
+	return (0); //occhio
 }
 
 
@@ -148,9 +151,7 @@ char *get_next_line(int fd)
 	char *container; 
 	char *buffer;
 	static char *remainder;
-	size_t chars;
-	size_t i;
-
+		
 	container = "";
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (remainder && (handle_remainder(&container, &remainder) == 1))
@@ -161,10 +162,8 @@ char *get_next_line(int fd)
 
 int main(void)
 {
-	char	*res;
 	int		fd;
-	size_t	chars;
-
+	
 	fd = open("test.txt", O_CREAT | O_RDONLY);	
 	for (size_t i = 0; i < 4; i++)	
 		printf("%s",get_next_line(fd));
@@ -176,5 +175,6 @@ int main(void)
 		printf("%s",get_next_line(fd));*/
 		
 	close(fd);
+	
 	return 0;
 }
