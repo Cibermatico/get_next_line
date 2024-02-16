@@ -31,7 +31,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len, short want2befreed)
 {
 	char	*new;
 	size_t	len1;
@@ -49,10 +49,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!new)
 		return (NULL);
 	ft_strlcpy(new, s + start, finish + 1);
+	if (want2befreed == 1)
+		free(s);
 	return (new);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		len1;
 	int		len2;
@@ -76,7 +78,34 @@ char	*ft_strjoin(char const *s1, char const *s2)
 			len1++;
 		}
 		result[len1] = '\0';
+		//free(s1);
 		return (result);
 	}
 	return (NULL);
+}
+
+char	*ft_strdup(char *src, short want2befreed)
+{
+	int		i;
+	int		j;
+	char	*copy;
+
+	i = 0;
+	j = 0;
+	while (src[i] != '\0')
+	{
+		i++;
+	}
+	copy = (char *)malloc(i * sizeof(char) + 1);
+	if (!copy)
+		return (NULL);
+	while (j <= i)
+	{
+		copy[j] = src[j];
+		j++;
+	}
+	copy[i] = '\0';
+	if (want2befreed == 1)
+		free(src);
+	return (copy);
 }
